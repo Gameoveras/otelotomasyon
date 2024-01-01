@@ -7,7 +7,7 @@ import datetime
 
 
 app = Flask(__name__)
-app.secret_key = 'sdfkwprı3*034ıaw*0dı-32ğ1pk1ğ34k1'
+app.secret_key = '****'
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static', 'images')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -40,7 +40,7 @@ def anasayfa():
         {"otel_adi": "Otel 1", "lat": 41.0082, "lng": 28.9784, "fiyat": 150, "aciklama": "Güzel bir otel"},
     ]
     ## Google Maps API Key
-    api_key = "AIzaSyBlrIbMz_0LyXMU0b923onTM--kqTsuULw" 
+    api_key = "*****" 
 
     if 'user' in session:
         return render_template('anasayfa_girisli.html', oteller=oteller,api_key=api_key , yer=otela)
