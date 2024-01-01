@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Üye Düzenleme Bölümü</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-default" style="background-color: #333; border-color: #444; color: #fff;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="background-color: #fff;">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" style="color: #fff;">Admin Paneli</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" style="color: #fff;">Otel Ekle</a></li>
+                    <li><a href="#" style="color: #fff;">Faaliyet Kontrol</a></li>
+                    <li><a href="#" style="color: #fff;">İndirim Talebi</a></li>
+                    <li><a href="#" style="color: #fff;">Üye İşlemleri</a></li>
+                    <li><a href="#" style="color: #fff;">Arama Ayarları</a></li>
+                    <li><a href="#" style="color: #fff;">Şikayetler</a></li>
+                    <li><a href="#" style="color: #fff;">Oteller</a></li>
+                    <li><a href="#" style="color: #fff;">İlanlar</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br>
+    <br>
+    <div class="container">
+        <h1><b>Üyeler Bölümü</b></h1>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Üye ID</th>
+                        <th>Ad-Soyad:</th>
+                        <th>Email</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user[0] }}</td>
+                            <td>{{ user[2] }}</td>
+                            <td>{{ user[4] }}</td>
+                            <td>
+                                <button class="btn btn-success" onclick="editMember({{ user[0] }})">Düzenle</button>
+                                <button class="btn btn-danger" onclick="deleteMember({{ user[0] }})">Sil</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <br>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <br>
+    <br>
+    <div class="footer">
+        2023 Tüm telif hakları saklıdır.
+    </div>
+
+    <script>
+        function editMember(id) {
+            console.log('Edit member with ID ' + id);
+            // Burada düzenleme işlemlerini gerçekleştirebilirsiniz
+        }
+
+        function deleteMember(id) {
+            console.log('Delete member with ID ' + id);
+            // Burada silme işlemlerini gerçekleştirebilirsiniz
+        }
+    </script>
+</body>
+
+</html>

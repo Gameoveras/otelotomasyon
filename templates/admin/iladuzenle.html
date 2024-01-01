@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Otel İlan Düzenleme Sayfası</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Otel Paneli</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Ana Sayfa</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">İlan Oluştur</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+
+<div class="container mt-3">
+    <h1 class="mt-5 mb-3">Otel İlan Düzenleme Sayfası</h1>
+
+    <form action="/admin/ilanlar/duzenle/{{ ilan_id }}" method="post" enctype="multipart/form-data">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="mb-3">
+                    <label for="otel-adi">Otel Adı</label>
+                    <input type="text" class="form-control" name="otel-adi" id="otel-adi" value="{{ ilan[1] }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="slogan">Slogan</label>
+                    <input type="text" class="form-control" name="slogan" id="slogan">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="facebook">Facebook Hesabı</label>
+                    <input type="text" class="form-control" name="facebook" id="facebook">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="instagram">Instagram Hesabı</label>
+                    <input type="text" class="form-control" name="instagram" id="instagram">
+                </div>
+
+                <div class="mb-3">
+                    <label for="yildiz">Yıldız Sayısı</label>
+                    <select class="form-control" name="yildiz" id="yildiz">
+                        <option value="1">1 Yıldız</option>
+                        <option value="2">2 Yıldız</option>
+                        <option value="3">3 Yıldız</option>
+                        <option value="4">4 Yıldız</option>
+                        <option value="5">5 Yıldız</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="il-ilce">İl</label>
+                    <input type="text" class="form-control" name="il" id="il" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="il-ilce">İlçe</label>
+                    <input type="text" class="form-control" name="ilce" id="ilce" required>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="mb-3">
+                    <label for="resim">Resimler</label>
+                    <input type="file" class="form-control" name="otel-resimler[]" accept="image/*" multiple>
+                </div>
+
+                <div class="mb-3">
+                    <label for="on-resim">Ön Resim</label>
+                    <input type="file" class="form-control" name="otel-onresim" accept="image/*">
+                </div>
+
+                <div class="mb-3">
+                    <label for="farkli-oda-ekle">Farklı Oda Eklemek İster Misiniz?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="farkli-oda-ekle" id="oda-ekle-evet" value="evet">
+                        <label class="form-check-label" for="oda-ekle-evet">Evet</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="farkli-oda-ekle" id="oda-ekle-hayir" value="hayir" checked>
+                        <label class="form-check-label" for="oda-ekle-hayir">Hayır</label>
+                    </div>
+                </div>
+
+                <div id="ilave-oda-bilgileri" style="display: none;">
+                    <h2 class="mt-5 mb-3">İlave Oda Bilgileri</h2>
+                
+                    <div class="mb-3">
+                        <label for="oda-sayisi">Kaç Oda Eklemek İstiyorsunuz?</label>
+                        <input type="number" class="form-control" name="oda-sayisi" id="oda-sayisi" required>
+                    </div>
+            
+                    <div id="oda-formlari"></div>
+            
+                    <br>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="her-sey-dahil">Her Şey Dahil</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="her-sey-dahil" id="her-sey-evet" value="evet">
+                <label class="form-check-label" for="her-sey-evet">Evet</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="her-sey-dahil" id="her-sey-hayir" value="hayir">
+                <label class="form-check-label" for="her-sey-hayir">Hayır</label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="il-ilce">E-posta</label>
+            <input type="text" class="form-control" name="eposta" id="eposta" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="il-ilce">Telefon</label>
+            <input type="text" class="form-control" name="tel" id="tel" required>
+        </div>
+        <div class="mb-3">
+            <label for="reservation-start">Rezervasyon Başlangıç Tarihi</label>
+            <input type="date" class="form-control" name="reservation-start" id="reservation-start" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="reservation-end">Rezervasyon Bitiş Tarihi</label>
+            <input type="date" class="form-control" name="reservation-end" id="reservation-end" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="max-occupancy">Maksimum Rezervasyon Sayısı</label>
+            <input type="number" class="form-control" name="max-occupancy" id="max-occupancy" required>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="denize-uzaklik">Denize Uzaklık (m)</label>
+                    <input type="number" class="form-control" name="denize-uzaklik" id="denize-uzaklik" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="gunluk-fiyat">Günlük Fiyat (Kişi başı)</label>
+                    <input type="number" class="form-control" name="gunluk-fiyat" id="gunluk-fiyat" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="tam-konum">Enlem</label>
+                    <input type="text" class="form-control" name="tam-konum" id="tam-konum" required>
+                </div>
+                <div class="mb-3">
+                    <label for="tam-konum">Boylam</label>
+                    <input type="text" class="form-control" name="boylam" id="boylam" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="denize-sifir">Denize Sıfır</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="denize-sifir" id="denize-evet" value="evet">
+                        <label class="form-check-label" for="denize-evet">Evet</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="denize-sifir" id="denize-hayir" value="hayir">
+                        <label class="form-check-label" for="denize-hayir">Hayır</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="havuzu-var">Havuz Var Mı?</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="havuzu-var" id="havuz-var-evet" value="var">
+                <label class="form-check-label" for="havuz-var-evet">Var</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="havuzu-var" id="havuz-var-yok" value="yok">
+                <label class="form-check-label" for="havuz-var-yok">Yok</label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="taksitli-odeme">Taksitli Ödeme Var Mı?</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="taksitli-odeme" id="taksitli-evet" value="var">
+                <label class="form-check-label" for="taksitli-evet">Var</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="taksitli-odeme" id="taksitli-yok" value="yok">
+                <label class="form-check-label" for="taksitli-yok">Yok</label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="otel-aciklama">Otel Açıklaması</label>
+            <textarea class="form-control" name="otel-aciklama" id="otel-aciklama" rows="5"></textarea>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">İlanı Kaydet</button>
+        <br>
+        <br>
+
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2Xof18E+BO9QF3Z/pLXR6B6N/2c/i1KZI2L" crossorigin="anonymous"></script>
+
+<script>
+    // Initialize date picker
+    flatpickr("#reservation-start", {
+        enableTime: false,
+        dateFormat: "Y-m-d",
+        minDate: "today",
+    });
+
+    flatpickr("#reservation-end", {
+        enableTime: false,
+        dateFormat: "Y-m-d",
+        minDate: "today",
+    });
+</script>
+
+<script>
+    // Sayfa yüklendiğinde çalışacak JavaScript kodu
+    $(document).ready(function () {
+        // Kaç oda eklemek istediklerini sormak
+        $('#oda-sayisi').change(function () {
+            var odaSayisi = $(this).val();
+            if (odaSayisi > 0) {
+                // Oda sayısı kadar form ekleyerek göster
+                $('#oda-formlari').empty();
+                for (var i = 1; i <= odaSayisi; i++) {
+                    var odaForm = `
+                        <div class="mb-3">
+                            <h3>Oda ${i}</h3>
+                            <label for="oda-adi-${i}">Oda Adı</label>
+                            <input type="text" class="form-control" name="oda-adi-${i}" id="oda-adi-${i}" required>
+
+                            <label for="oda-resim-${i}">Oda Resimleri</label>
+                            <input type="file" class="form-control" name="oda-resim-${i}[]" id="oda-resim-${i}" multiple>
+
+                            <label for="max-kisi-sayisi-${i}">Maksimum Kişi Sayısı</label>
+                            <input type="number" class="form-control" name="max-kisi-sayisi-${i}" id="max-kisi-sayisi-${i}" required>
+
+                            <label for="cift-fiyat-${i}">Çift Kişilik Fiyatı (Günlük)</label>
+                            <input type="number" class="form-control" name="cift-fiyat-${i}" id="cift-fiyat-${i}" required>
+
+                            <label for="gunluk-aciklama-${i}">Oda Açıklaması</label>
+                            <textarea class="form-control" name="gunluk-aciklama-${i}" id="gunluk-aciklama-${i}" rows="5"></textarea>
+                        </div>
+                    `;
+                    $('#oda-formlari').append(odaForm);
+                }
+                // İlave oda bilgileri alanını göster
+                $('#ilave-oda-bilgileri').show();
+            } else {
+                // Oda sayısı 0 veya negatifse, alanları gizle
+                $('#oda-formlari').empty();
+                $('#ilave-oda-bilgileri').hide();
+            }
+        });
+    });
+</script>
+
+<script>
+    // Sayfa yüklendiğinde çalışacak JavaScript kodu
+    $(document).ready(function () {
+        // Radio button değişikliği dinle
+        $('input[name="farkli-oda-ekle"]').change(function () {
+            if ($(this).val() === 'evet') {
+                $('#ilave-oda-bilgileri').show();
+            } else {
+                $('#ilave-oda-bilgileri').hide();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Otel İlan ve Rezervasyon Yönetimi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-mQ93GR66Bms490Dqxbso7fdX8Lss2wcB7a4Q3Y338l7Htjmtlhq2+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <style>
+    /* Custom Styles */
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    .nav-bar {
+        background-color: #343a40; /* Dark background color for the navbar */
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .nav-bar .nav-link {
+        color: #fff; /* White text color for navbar links */
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+      .nav-bar .nav-link:hover {
+        background-color: #555; /* Darker background color on hover */
+      }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .table th, .table td {
+      border: 1px solid #dee2e6;
+      padding: 15px;
+      text-align: left;
+    }
+    .table th {
+      background-color: #007bff;
+      color: #fff;
+    }
+    .table .bg-green {
+      background-color: #c8e6c9;
+      color: #006400;
+    }
+    .table .bg-red {
+      background-color: #f0ad4e;
+      color: #8b4513;
+    }
+    .table .btn-action {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .modal-dialog {
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header class="mb-3">
+    <h1 class="title">Otel İlan ve Rezervasyon Yönetimi</h1>
+  </header>
+
+  <nav class="nav-bar mb-3">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#">İlan Oluştur</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">İlan Yönet</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Rezervasyon Yönet</a>
+      </li>
+    </ul>
+  </nav>
+
+  <h1>Rezervasyon Talepleri</h1>
+
+  {% if talepler %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Otel Adı</th>
+        <th>Tam Konum</th>
+        <th>Rezervasyon Durumu</th>
+        <th>Ücret Durumu</th>
+        <th>İşlemler</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for talep in talepler %}
+      <tr>
+        <td>{{ talep[0] }}</td>
+        <td>{{ talep[9] }}</td>
+        <td>{{ talep[10] }}</td>
+        <td class="{% if talep[3] == 'Onaylandı' %}bg-green{% elif talep[3] == 'Reddedildi' %}bg-red{% else %}bg-yellow{% endif %}">{{ talep[3] }}</td>
+        <td>{{ talep[4] }}</td>
+        <td>
+            {% if talep[3] == 1 %}
+                <button class="btn btn-success btn-action" data-bs-toggle="modal" data-bs-target="#onayModal{{ talep[1] }}">Onayla</button>
+                <button class="btn btn-danger btn-action" data-bs-toggle="modal" data-bs-target="#redModal{{ talep[0] }}">Reddet</button>
+            {% elif talep[3] == 'Bekliyor' and talep[4] == 'Ödeme Bekleniyor' %}
+                <button class="btn btn-success btn-action" data-bs-toggle="modal" data-bs-target="#odemeModal{{ talep[0] }}">Ödemeyi Onayla</button>
+                <button class="btn btn-danger btn-action" data-bs-toggle="modal" data-bs-target="#iptalModal{{ talep[0] }}">İptal Talebi</button>
+            {% elif talep[3] == 'Bekliyor' and talep[4] == 'Taksitli Ödeme' %}
+                <button class="btn btn-success btn-action" data-bs-toggle="modal" data-bs-target="#taksitOnayModal{{ talep[0] }}">Taksitleri Onayla</button>
+                <button class="btn btn-danger btn-action" data-bs-toggle="modal" data-bs-target="#redModal{{ talep[0] }}">Reddet</button>
+            {% endif %}
+        </td>
+    </tr>
+    
+      {% endfor %}
+
+
+    </tbody>
+  </table>
+  {% else %}
+  <p>Rezervasyon talebi bulunmamaktadır.</p>
+  {% endif %}
+</div>
+
+          
+
+          <div class="modal fade" id="onayModal" tabindex="-1" aria-labelledby="onayModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="onayModalLabel">Rezervasyonu Onaylama</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Rezervasyonu onaylamak istiyor musunuz?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                  <button type="button" class="btn btn-success">Onayla</button>
+                </div>
+              </div>
+            </div>
+          </div>
+<div class="modal fade" id="redModal" tabindex="-1" aria-labelledby="redModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="redModalLabel">Rezervasyonu Reddetme</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="rejectionReason" class="form-label">Rezervasyonu neden reddetmek istiyorsunuz?</label>
+              <textarea class="form-control" id="rejectionReason" rows="3"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+          <button type="button" class="btn btn-danger">Reddet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQ93GR66Bms490Dqxbso7fdX8Lss2wcB7a4Q3Y338l7Htjmtlhq2+Y8vEf7N7fWAU" crossorigin="anonymous"></script>
+          
+          </body>
+          </html>
+         
+          

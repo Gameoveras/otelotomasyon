@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Şikayetler</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-default" style="background-color: #333; border-color: #444; color: #fff;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="background-color: #fff;">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" style="color: #fff;">Admin Paneli</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" style="color: #fff;">Otel Ekle</a></li>
+                    <li><a href="#" style="color: #fff;">Faaliyet Kontrol</a></li>
+                    <li><a href="#" style="color: #fff;">İndirim Talebi</a></li>
+                    <li><a href="#" style="color: #fff;">Üye İşlemleri</a></li>
+                    <li><a href="#" style="color: #fff;">Arama Ayarları</a></li>
+                    <li><a href="#" style="color: #fff;">Şikayetler</a></li>
+                    <li><a href="#" style="color: #fff;">Oteller</a></li>
+                    <li><a href="#" style="color: #fff;">İlanlar</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br>
+    <br>
+    <div class="container">
+        <h1><b>Şikayetler Bölümü</b></h1>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Şikayet ID</th>
+                        <th>Kullanıcı ID</th>
+                        <th>Otel Adı</th>
+                        <th>Konu</th>
+                        <th>Mesaj</th>
+                        <th>Durum</th> <!-- Durum sütunu eklendi -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sikayet in sikayet %}
+                        <tr>
+                            <td>{{ sikayet[0] }}</td>
+                            <td>{{ sikayet[1] }}</td>
+                            <td>{{ sikayet[2] }}</td>
+                            <td>{{ sikayet[3] }}</td>
+                            <td>{{ sikayet[4] }}</td>
+                            <td>{{ sikayet[5] }}</td> 
+                            <td>
+                                <button class="btn btn-success" onclick="ilgilenildi({{ sikayet[0] }})">İlgilenildi</button>
+                                <button class="btn btn-danger" onclick="ilgilenilmedi({{ sikayet[0] }})">İlgilenilmedi</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <br>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <br>
+    <br>
+    <div class="footer">
+        2023 Tüm telif hakları saklıdır.
+    </div>
+</body>
+
+</html>

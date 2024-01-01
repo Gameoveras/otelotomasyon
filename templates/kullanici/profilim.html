@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Müşteri Profilim</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #333;
+            border-color: #444;
+            color: #fff;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 50%;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        p {
+            margin: 0;
+            padding: 5px 0;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .payment-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Kullanıcı Paneli</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar"
+            aria-controls="myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profilim</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Rezervasyonlarım</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Son Görüntülediklerim</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <header>
+        <h1>Müşteri Profilim</h1>
+    </header>
+
+    <div class="container">
+        <h2>{{ kullanici['ad'] }} {{ kullanici['soyad'] }}</h2>
+
+        <label>Email:</label>
+        <p>{{ kullanici[-2] }}</p>
+
+        <button class="edit-btn" onclick="editProfile()">Profili Düzenle</button>
+
+        <div class="form-container">
+            <form method="post">
+                <label for="adsoyad">Ad Soyad:</label>
+                <input type="text" name="adsoyad" value="{{ kullanici[2] }}" required>
+        
+                <label for="telefon">Telefon:</label>
+                <input type="tel" name="telefon" value="{{ kullanici[-1] }}" required>
+        
+                <label for="email">Email:</label>
+                <input type="email" name="email" value="{{ kullanici[-2] }}" required>
+        
+                <label for="sifre">Şifre:</label>
+                <input type="password" name="sifre" required>
+        
+                <button type="submit" class="save-btn">Kaydet</button>
+                <button type="button" class="cancel-btn" onclick="cancelEdit()">İptal</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function editProfile() {
+            document.querySelector('.form-container').style.display = 'block';
+            document.querySelector('.edit-btn').style.display = 'none';
+        }
+
+        function cancelEdit() {
+            document.querySelector('.form-container').style.display = 'none';
+            document.querySelector('.edit-btn').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

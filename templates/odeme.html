@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f3f5f7;
+        color: #333;
+      }
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: black;
+        color: white;
+        text-align: center;
+        font-style: inherit;
+    }
+      
+      header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 0;
+      }
+      
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+      }
+      
+      .logo {
+        margin: 0;
+      }
+      
+      .payment-container {
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      label {
+        margin-bottom: 8px;
+        color: #333;
+      }
+      
+      input {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      
+      .form-row {
+        display: flex;
+        justify-content: space-between;
+      }
+      
+      .form-group {
+        flex-grow: 1;
+        margin-right: 10px;
+      }
+      
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      button:hover {
+        background-color: #0056b3;
+      }
+      
+      /* Diğer stil kuralları buraya eklenebilir */
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 50px auto;
+}
+
+.reservation-details {
+  max-width: 400px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+  </style>
+
+  <title>Ödeme Sayfası</title>
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <h1 class="logo">Otel Bilgileri</h1>
+    <!-- Navbar menüsü buraya gelebilir -->
+  </nav>
+</header>
+
+<main>
+  <section class="payment-container">
+    <div class="reservation-details">
+      <h2>Rezervasyon Bilgileri</h2>
+      <table>
+        <tr>
+          <td>Otel Adı:</td>
+          <td>{{ rezervasyon[8] }}</td>
+        </tr>
+        <tr>
+          <td>Giriş Tarihi:</td>
+          <td>{{ rezervasyon[3] }}</td>
+        </tr>
+        <tr>
+          <td>Çıkış Tarihi:</td>
+          <td>{{ rezervasyon[4] }}</td>
+        </tr>
+        <tr>
+          <td>Toplam Fiyat:</td>
+          <td>{{ rezervasyon[7] }} TL</td>
+      </tr>
+      </table>
+    </div>
+    <h2>Ödeme Bilgileri</h2>
+    <form id="payment-form">
+      <label for="card-number">Kredi Kartı Numarası</label>
+      <input type="text" id="card-number" name="card-number" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+
+      <label for="card-holder">Kart Sahibinin Adı</label>
+      <input type="text" id="card-holder" name="card-holder" required>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="expiration-date">Son Kullanma Tarihi</label>
+          <input type="text" id="expiration-date" name="expiration-date" placeholder="MM/YYYY" required>
+        </div>
+        <div class="form-group">
+          <label for="cvv">CVV</label>
+          <input type="text" id="cvv" name="cvv" placeholder="XXX" required>
+        </div>
+      </div>
+
+      <button type="submit">Ödemeyi Tamamla</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+    <div class="footer">
+        2023 Tüm telif hakları saklıdır.
+    </div></footer>
+
+</body>
+</html>

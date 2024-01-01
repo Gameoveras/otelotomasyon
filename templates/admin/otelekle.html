@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Otel Kayıt Formu</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    
+ 
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Admin Paneli</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" style="color: #fff;">Otel Ekle</a></li>
+                    <li><a href="#" style="color: #fff;">Faaliyet Kontrol</a></li>
+                    <li><a href="#" style="color: #fff;">İndirim Talebi</a></li>
+                    <li><a href="#" style="color: #fff;">Üye İşlemleri</a></li>
+                    <li><a href="#" style="color: #fff;">Arama Ayarları</a></li>
+                    <li><a href="#" style="color: #fff;">Şikayetler</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container form-container">
+        <form method="post" action="/admin/otelekle">
+            <div class="form-group">
+                <label>Otel Adı:</label>
+                <input type="text" class="form-control" name="otelAdi">
+            </div>
+            <div class="form-group">
+                <label>Parola:</label>
+                <input type="password" class="form-control" name="parola">
+            </div>
+            <div class="form-group">
+                <label>Adres:</label>
+                <input type="text" class="form-control" name="adres">
+            </div>
+            <div class="form-group">
+                <label>Telefon Numarası:</label>
+                <input type="tel" class="form-control" name="telefon">
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" class="form-control" name="email">
+            </div>
+            <div class="form-group">
+                <label>Oda Sayısı:</label>
+                <input type="number" class="form-control" name="odaSayisi">
+            </div>
+            <div class="form-group">
+                <label>Açıklama:</label>
+                <textarea class="form-control" name="aciklama" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Konum Enlem (Latitude):</label>
+                <input type="text" class="form-control" name="enlem">
+            </div>
+            <div class="form-group">
+                <label>Konum Boylam (Longitude):</label>
+                <input type="text" class="form-control" name="boylam">
+            </div>
+            
+            <div class="form-group">
+                <label>Vergi Numarası:</label>
+                <input type="text" class="form-control" name="vergiNumarasi">
+            </div>
+            <button type="submit" class="btn btn-primary">Otel Kaydını Tamamla</button>
+        </form>
+    </div>
+
+    <br>
+    <br>
+
+  
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Otel Profilim</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2>Otel Profilim</h2>
+        <table class="table mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Otel Adı</th>
+                    <th>Şehir</th>
+                    <th>İlçe</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if ilanlar %}
+                {% for otel in oteller %}
+                    <tr>
+                        <td>{{ otel[0] }}</td>
+                        <td>{{ otel[1] }}</td>
+                        <td>{{ otel[6] }}</td>
+                        <td>{{ otel[7] }}</td>
+                        <td>
+                            <a href="{{ url_for('ilan_duzenle', ilan_id=otel[0]) }}" class="btn btn-primary">Düzenle</a>
+                            <form action="{{ url_for('ilan_sil', ilan_id=otel[0]) }}" method="post">
+                                <button type="submit" class="btn btn-danger">Sil</button>
+                            </form>
+                                                    </td>
+                    </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="5">Henüz ilanınız bulunmamaktadır.</td>    
+                </tr>
+                {% endif %}
+                
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

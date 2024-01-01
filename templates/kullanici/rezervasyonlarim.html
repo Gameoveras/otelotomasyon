@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Rezervasyonlarım</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #333;
+            border-color: #444;
+            color: #fff;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .confirmation {
+            color: green;
+        }
+
+        .payment {
+            color: blue;
+        }
+
+        .cancellation {
+            color: red;
+        }
+
+        .cancel-button {
+            background-color: red;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cancel-button:hover {
+            background-color: darkred;
+        }
+
+        .date-filter {
+            margin-bottom: 20px;
+        }
+
+        .total-price {
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Kullanıcı Paneli</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar"
+            aria-controls="myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profilim</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Rezervasyonlarım</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Son Görüntülediklerim</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Rezervasyonlarım</h1>
+    </header>
+
+    <div class="container">
+        <div class="date-filter">
+            <label>Otele Giriş Tarihi:</label>
+            <input type="date" id="checkInDate">
+
+            <label>Otel Çıkış Tarihi:</label>
+            <input type="date" id="checkOutDate">
+
+            <button onclick="filterByDate()">Filtrele</button>
+        </div>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Otel Adı</th>
+                    <th>Otele Giriş</th>
+                    <th>Otel Çıkış</th>
+                    <th>Durum</th>
+                    <th>Toplam Fiyat</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody id="reservationTableBody">
+                {% for rezervasyon in rezervasyonlar %}
+                    <tr>
+                        <td>{{ rezervasyon[0] }}</td>
+                        <td>{{ rezervasyon[-1] }}</td>
+                        <td>{{ rezervasyon[3] }}</td>
+                        <td>{{ rezervasyon[4] }}</td>
+                        <td class="{{ rezervasyon[8] }}">{{ rezervasyon[8] }}</td>
+                        <td>{{ rezervasyon[7] }} TL</td>
+                        <td>
+                            {% if rezervasyon[8] == 'cancellation' and rezervasyon[8] != 2 %}
+                                <button class="btn btn-danger">İptal Talebi</button>
+                            {% endif %}
+                        </td>
+                        
+                            
+                        </td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    
+    </div>
+
+    <script>
+        // JavaScript kodları buraya gelecek
+
+        function getStatusText(status) {
+            switch (status) {
+                case 'confirmation':
+                    return 'Onaylandı';
+                case 'payment':
+                    return 'Ücret Ödendi';
+                case 'cancellation':
+                    return 'İptal Edildi';
+                default:
+                    return '';
+            }
+        }
+
+        function getActionButton(status, reservationId) {
+            if (status === 'cancellation') {
+                return '-';
+            } else {
+                return `<button class="btn btn-danger" onclick="cancelReservation(${reservationId})">İptal Talebi</button>`;
+            }
+        }
+
+        function filterByDate() {
+            // Otele giriş ve çıkış tarihlerine göre filtreleme işlemleri
+            var checkInDate = document.getElementById('checkInDate').value;
+            var checkOutDate = document.getElementById('checkOutDate').value;
+
+            // Filtreleme işlemleri yapılabilir, örneğin AJAX çağrısı ile sunucudan güncel rezervasyonları alabilirsiniz.
+            // Burada sadece örnek otelleri filtreleyeceğiz.
+            var filteredHotels = hotels.filter(function (hotel) {
+                return hotel.checkIn >= checkInDate && hotel.checkOut <= checkOutDate;
+            });
+
+            // Filtrelenen otelleri ekrana göster
+            hotels = filteredHotels;
+            renderHotels();
+        }
+
+        function cancelReservation(reservationId) {
+            // İptal talebi işlemleri
+            alert("Rezervasyon iptal talebinde bulunuldu: " + reservationId);
+        }
+
+        // Sayfa yüklendiğinde otelleri göster
+        renderHotels();
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

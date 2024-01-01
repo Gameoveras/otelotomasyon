@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Yönetici İlanları</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      padding: 20px;
+    }
+    /* Navbar Stili */
+.navbar {
+    background-color: #333;
+}
+
+.navbar-brand, .navbar-nav > li > a {
+    color: #fff !important;
+}
+
+/* Tablo Stili */
+.table {
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+
+.table thead {
+    background-color: #333;
+    color: #fff;
+}
+
+.table-responsive {
+    margin-top: 20px;
+}
+
+/* İşlem Bağlantısı Stili */
+.table tbody a {
+    color: #007bff;
+    text-decoration: none;
+}
+  </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Admin Paneli</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" style="color: #fff;">Otel Ekle</a></li>
+                    <li><a href="#" style="color: #fff;">Faaliyet Kontrol</a></li>
+                    <li><a href="#" style="color: #fff;">Üye İşlemleri</a></li>
+                    <li><a href="#" style="color: #fff;">Arama Ayarları</a></li>
+                    <li><a href="#" style="color: #fff;">Şikayetler</a></li>
+                    <li><a href="#" style="color: #fff;">Oteller</a></li>
+                    <li><a href="#" style="color: #fff;">İlanlar</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+  <h1 class="mb-4">Yönetici İlanları</h1>
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>İlan ID</th>
+          <th>Otel Adı</th>
+          <th>Şehir</th>
+          <th>İlçe</th>
+          <th>Günlük Fiyat</th>
+          <th>İşlem</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ilan in ilanlar %}
+          <tr>
+            <td>{{ ilan[0] }}</td>
+            <td>{{ ilan[1] }}</td>
+            <td>{{ ilan[6] }}</td>
+            <td>{{ ilan[7] }}</td>
+            <td>{{ ilan[17] }}</td>
+            <td><a href="/admin/ilanlar/duzenle/{{ ilan[0] }}">Düzenle</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Bootstrap JS ve Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>

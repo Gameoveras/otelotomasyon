@@ -1,0 +1,37 @@
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #FFF;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #FFF;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+    background-color: #080808;
+}
+
+.welcome-box {
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.footer {
+    background-color: #333;
+    color: #FFF;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.form-container {
+    margin-top: 30px;
+}
