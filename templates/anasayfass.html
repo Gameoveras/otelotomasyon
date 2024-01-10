@@ -110,9 +110,7 @@
                       <li class="nav-item">
                           <a class="nav-link" href="/girisyap">Giriş Yap</a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/asdasda">Favoriler</a>
-                                            </li>
+                     
                   </ul>
               </div>
           </div>
@@ -120,7 +118,7 @@
         <br>
         <br>
         <br>
-        <form class="form" action="/search" method="get">
+        <form id="search-form" class="form" action="/search" method="get" onsubmit="return handleFormSubmit()">
           <div class="row">
             <div class="col-md-3">
               <div class="form-group">
@@ -211,55 +209,69 @@
         }
     </script>
     <script>
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: { lat: 41.0082, lng: 28.9784 }, // Default coordinates for Istanbul
-          zoom: 10
-        });
-    
-        var hotelLocations = [
-          {% for otel in oteller %}
-            { lat: {{ otel.latitude }}, lng: {{ otel.longitude }} },
-          {% endfor %}
-        ];
-    
-        var hotelData = [
-          {% for otel in oteller %}
-            { name: "{{ otel.name }}", dailyPrice: {{ otel.daily_price }}, description: "{{ otel.description }}" },
-          {% endfor %}
-        ];
-    
-        var infowindows = [];
-    
-        for (var i = 0; i < hotelLocations.length; i++) {
-          var marker = new google.maps.Marker({
-            position: hotelLocations[i],
-            map: map,
-            title: 'Otel ' + (i + 1)
-          });
-    
-          var infowindow = new google.maps.InfoWindow({
-            content: '<div><strong>' + hotelData[i].name + '</strong></div>' +
-              '<div>Günlük Fiyat: ' + hotelData[i].dailyPrice + ' TL</div>' +
-              '<button onclick="showHotelInfo(\'' + hotelData[i].name + '\', ' + hotelData[i].dailyPrice + ')">Detaylar</button>'
-          });
-    
-          infowindows.push(infowindow);
-    
-          marker.addListener('click', function () {
-            infowindows.forEach(function (info) {
-              info.close();
-            });
-            var info = infowindows[parseInt(this.getTitle().split(' ')[1]) - 1];
-            info.open(map, this);
-          });
-        }
+      function handleFormSubmit() {
+          var destination = document.getElementById('nereye').value;
+          var checkinDate = document.getElementById('checkin').value;
+          var checkoutDate = document.getElementById('checkout').value;
+          var numPeople = document.getElementById('num_people').value;
+  
+          updateMapAndListings(destination, checkinDate, checkoutDate, numPeople);
+  
+          return false;
       }
-    
+  
+      function updateMapAndListings(destination, checkinDate, checkoutDate, numPeople) {
+          var map = new google.maps.Map(document.getElementById('map'), {
+              center: { lat: 41.0082, lng: 28.9784 }, // Istanbul coordinates
+              zoom: 10
+          });
+  
+          var hotelLocations = [
+              { lat: 41.0082, lng: 28.9784 },
+              { lat: 41.05, lng: 28.98 },
+              { lat: 41.03, lng: 28.99 }
+              // ... Diğer otellerin koordinatları buraya eklenebilir
+          ];
+  
+          var hotelData = [
+              { name: "Otel 1", dailyPrice: 15000, description: "Otel 1 açıklaması" },
+              { name: "Otel 2", dailyPrice: 20000, description: "Otel 2 açıklaması" },
+              { name: "Otel 3", dailyPrice: 12000, description: "Otel 3 açıklaması" }
+              // ... Diğer otellerin bilgileri buraya eklenebilir
+          ];
+  
+          var infowindows = [];
+  
+          for (var i = 0; i < hotelLocations.length; i++) {
+              var marker = new google.maps.Marker({
+                  position: hotelLocations[i],
+                  map: map,
+                  title: 'Otel ' + (i + 1)
+              });
+  
+              var infowindow = new google.maps.InfoWindow({
+                  content: '<div><strong>' + hotelData[i].name + '</strong></div>' +
+                      '<div>Günlük Fiyat: ' + hotelData[i].dailyPrice + ' TL</div>' +
+                      '<button onclick="showHotelInfo(\'' + hotelData[i].name + '\', ' + hotelData[i].dailyPrice + ')">Detaylar</button>'
+              });
+  
+              infowindows.push(infowindow);
+  
+              marker.addListener('click', function () {
+                  infowindows.forEach(function (info) {
+                      info.close();
+                  });
+                  var info = infowindows[parseInt(this.getTitle().split(' ')[1]) - 1];
+                  info.open(map, this);
+              });
+          }
+      }
+  
       function showHotelInfo(name, price) {
-        alert('Otel Adı: ' + name + '\nGünlük Fiyat: ' + price + ' TL');
+          alert('Otel Adı: ' + name + '\nGünlük Fiyat: ' + price + ' TL');
       }
-    </script>
+  </script>
+  
     
 
 <script>

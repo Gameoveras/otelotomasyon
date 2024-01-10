@@ -3,131 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <style>
     body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #f3f5f7;
-        color: #333;
-      }
-      .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: black;
-        color: white;
-        text-align: center;
-        font-style: inherit;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f3f5f7;
+      color: #333;
     }
-      
-      header {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 0;
-      }
-      
-      .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-      }
-      
-      .logo {
-        margin: 0;
-      }
-      
-      .payment-container {
-        max-width: 400px;
-        margin: 50px auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-      
-      form {
-        display: flex;
-        flex-direction: column;
-      }
-      
-      label {
-        margin-bottom: 8px;
-        color: #333;
-      }
-      
-      input {
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-      
-      .form-row {
-        display: flex;
-        justify-content: space-between;
-      }
-      
-      .form-group {
-        flex-grow: 1;
-        margin-right: 10px;
-      }
-      
-      button {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      
-      button:hover {
-        background-color: #0056b3;
-      }
-      
-      /* Diğer stil kuralları buraya eklenebilir */
 
-.content {
-  display: flex;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 50px auto;
-}
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: black;
+      color: white;
+      text-align: center;
+      font-style: inherit;
+      padding: 10px;
+    }
 
-.reservation-details {
-  max-width: 400px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+    header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 0;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
 
-table, th, td {
-  border: 1px solid #ddd;
-}
+    .logo {
+      margin: 0;
+    }
 
-th, td {
-  padding: 10px;
-  text-align: left;
-}
+    .payment-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
 
-th {
-  background-color: #007bff;
-  color: #fff;
-}
+    form {
+      display: flex;
+      flex-direction: column;
+    }
 
+    label {
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .form-group {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .payment-details {
+      display: none;
+    }
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 50px auto;
+    }
+  
+   
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+  
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+  
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+  
+    th {
+      background-color: #007bff;
+      color: #fff;
+    }
   </style>
 
   <title>Ödeme Sayfası</title>
@@ -136,8 +133,12 @@ th {
 
 <header>
   <nav class="navbar">
-    <h1 class="logo">Otel Bilgileri</h1>
-    <!-- Navbar menüsü buraya gelebilir -->
+    <a href="/" class="navbar-brand"><font color="black">Ana Sayfa</font></a>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Ana Sayfa</a>
+      </li>
+    </ul>
   </nav>
 </header>
 
@@ -145,7 +146,7 @@ th {
   <section class="payment-container">
     <div class="reservation-details">
       <h2>Rezervasyon Bilgileri</h2>
-      <table>
+      <table class"table">
         <tr>
           <td>Otel Adı:</td>
           <td>{{ rezervasyon[8] }}</td>
@@ -163,35 +164,94 @@ th {
           <td>{{ rezervasyon[7] }} TL</td>
       </tr>
       </table>
-    </div>
-    <h2>Ödeme Bilgileri</h2>
-    <form id="payment-form">
-      <label for="card-number">Kredi Kartı Numarası</label>
-      <input type="text" id="card-number" name="card-number" placeholder="XXXX-XXXX-XXXX-XXXX" required>
-
-      <label for="card-holder">Kart Sahibinin Adı</label>
-      <input type="text" id="card-holder" name="card-holder" required>
-
-      <div class="form-row">
+      <h2>Ödeme Bilgileri</h2>
+      <form id="payment-form">
         <div class="form-group">
-          <label for="expiration-date">Son Kullanma Tarihi</label>
-          <input type="text" id="expiration-date" name="expiration-date" placeholder="MM/YYYY" required>
+          <label for="payment-method">Ödeme Yöntemi</label>
+          <select id="payment-method" name="payment-method" class="form-control" required>
+            <option value="credit-card">Kredi Kartı</option>
+            <option value="eft-havale">EFT/Havale</option>
+          </select>
         </div>
+  
+        <!-- Kredi Kartı Bilgileri -->
+        <div id="credit-card-details" class="payment-details">
+          <label for="card-number">Kredi Kartı Numarası</label>
+          <input type="text" id="card-number" name="card-number" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+  
+          <label for="card-holder">Kart Sahibinin Adı</label>
+          <input type="text" id="card-holder" name="card-holder" class="form-control" required>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expiration-date">Son Kullanma Tarihi</label>
+              <input type="text" id="expiration-date" name="expiration-date" class="form-control" placeholder="MM/YYYY" required>
+            </div>
+            <div class="form-group">
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" name="cvv" class="form-control" placeholder="XXX" required>
+            </div>
+          </div>
+        </div>
+  
+        <!-- EFT/Havale Bilgileri -->
+        <div id="eft-havale-details" class="payment-details">
+          <p>EFT/Havale yapmak için aşağıdaki banka bilgilerini kullanabilirsiniz:</p>
+          <p>Banka: XXX Bankası</p>
+          <p>IBAN: TR12 XXXX 0000 0000 0000 0000 00</p>
+        </div>
+  
         <div class="form-group">
-          <label for="cvv">CVV</label>
-          <input type="text" id="cvv" name="cvv" placeholder="XXX" required>
-        </div>
-      </div>
+          <label for="accept-terms">
+            <input type="checkbox" id="accept-terms" required>
+            Mesafeli Satış Sözleşmesi ve Ön Bilgilendirme Formunu Okudum ve Kabul Ediyorum.
+          </label>
 
-      <button type="submit">Ödemeyi Tamamla</button>
-    </form>
+        </div>
+
+        <p class="font-weight-bold">Not: Faturanız, E-Fatura olarak rezervasyonunuz onaylandığında ilgili e-posta adresinize iletilecektir.</p>
+
+  
+        <button type="submit" class="btn btn-primary">Ödemeyi Tamamla</button>
+        
+      </form>
+      <br>
+      <a href="/" class="btn btn-danger">Anasayfaya Dön</a>
+
   </section>
 </main>
 
 <footer>
     <div class="footer">
         2023 Tüm telif hakları saklıdır.
-    </div></footer>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var paymentMethodSelect = document.getElementById("payment-method");
+    var creditCardDetails = document.getElementById("credit-card-details");
+    var eftHavaleDetails = document.getElementById("eft-havale-details");
+
+    paymentMethodSelect.addEventListener("change", function () {
+      if (paymentMethodSelect.value === "credit-card") {
+        creditCardDetails.style.display = "block";
+        eftHavaleDetails.style.display = "none";
+      } else if (paymentMethodSelect.value === "eft-havale") {
+        creditCardDetails.style.display = "none";
+        eftHavaleDetails.style.display = "block";
+      } else {
+        creditCardDetails.style.display = "none";
+        eftHavaleDetails.style.display = "none";
+      }
+    });
+  });
+</script>
+
 
 </body>
 </html>

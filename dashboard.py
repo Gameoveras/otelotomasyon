@@ -7,7 +7,7 @@ import datetime
 
 
 app = Flask(__name__)
-app.secret_key = '****'
+app.secret_key = 'sdfkwprı3*034ıaw*0dı-32ğ1pk1ğ34k1'
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static', 'images')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -39,11 +39,14 @@ def anasayfa():
     otela = [
         {"otel_adi": "Otel 1", "lat": 41.0082, "lng": 28.9784, "fiyat": 150, "aciklama": "Güzel bir otel"},
     ]
+    
+    user_id = get_user_id() 
+    
     ## Google Maps API Key
-    api_key = "*****" 
+    api_key = "AIzaSyBlrIbMz_0LyXMU0b923onTM--kqTsuULw" 
 
     if 'user' in session:
-        return render_template('anasayfa_girisli.html', oteller=oteller,api_key=api_key , yer=otela)
+        return render_template('anasayfa_girisli.html', oteller=oteller,api_key=api_key , yer=otela, user_id=user_id)
     else:
         return render_template('anasayfass.html', oteller=oteller,api_key=api_key , yer=otela) 
 
@@ -390,10 +393,14 @@ def favorilerim(kullanici_id):
     """, (kullanici_id,))
 
     favori_oteller = cursor.fetchall()
+    
+    
 
     conn.close()
+    
+    user_id = get_user_id() 
 
-    return render_template('/kullanici/favorilerim.html', favori_oteller=favori_oteller)
+    return render_template('/kullanici/favorilerim.html', favori_oteller=favori_oteller,user_id=user_id)
 
 
 # Kullanıcı bilgilerini getirme fonksiyonu
@@ -433,6 +440,9 @@ def profilim():
         return redirect(url_for('login'))
 
     kullanici = get_kullanici_bilgileri()
+    
+    user_id = get_user_id() 
+
 
     if request.method == 'POST':
         yeni_bilgiler = {
@@ -442,7 +452,7 @@ def profilim():
         }
         update_kullanici_bilgileri(yeni_bilgiler)
 
-    return render_template('/kullanici/profilim.html', kullanici=kullanici)
+    return render_template('/kullanici/profilim.html', kullanici=kullanici,user_id=user_id)
 
 # Kullanıcı rezervasyonları
 @app.route("/kullanici/rezervasyonlarim", methods=['GET'])
@@ -464,8 +474,10 @@ def rezer():
 
 
     conn.close()
+    
+    user_id = get_user_id() 
 
-    return render_template("/kullanici/rezervasyonlarim.html", rezervasyonlar=rezervasyonlar)
+    return render_template("/kullanici/rezervasyonlarim.html", rezervasyonlar=rezervasyonlar, user_id=user_id)
 
 # Son görüntülenen otelleri getirme fonksiyonu
 @app.route("/kullanici/songoruntulenen", methods=['GET'])
@@ -488,13 +500,15 @@ def son_goruntulenen():
             oteller.append({'otel_id': otel_id, 'otel_bilgisi': otel_bilgisi, 'tarih': tarih})
 
         conn.close()
+        
+        user_id = get_user_id() 
 
-        return render_template('/kullanici/songoruntulenen.html', oteller=oteller)
+        return render_template('/kullanici/songoruntulenen.html', oteller=oteller, user_id=user_id)
     else:
         return redirect(url_for('login'))
 
 # Otel ilanları    
-@app.route("/otel/", methods=['GET', 'POST'])
+@app.route("/otel/ilanolustur", methods=['GET', 'POST'])
 def otel():
     if request.method == 'POST':
         otel_id = request.form.get('otel_id')
@@ -599,7 +613,7 @@ def get_hotel_ilanlari(hotel_id):
 
 
 # Otel profil sayfası
-@app.route("/otel/profilim")
+@app.route("/otel")
 def otel_profil():
     if 'otel' not in session:
         return redirect(url_for('otel_giris'))

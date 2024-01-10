@@ -104,15 +104,29 @@
                 <a class="navbar-brand" href="#">Ana Sayfa</a>
                 <div class="collapse navbar-collapse" id="Navbar">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/favoriler">Favoriler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/songoruntulenen">Son Görüntülemelerim</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/profilim">Profilim</a>
-                        </li>
+                      <li class="nav-item">
+                        {% if user_id %}
+                            <a class="nav-link" href="{{ url_for('favorilerim', kullanici_id=user_id) }}">Favorilerim</a>
+                        {% else %}
+                            <a class="nav-link" href="/kullanici/favoriler">Favoriler</a>
+                        {% endif %}
+                    </li>
+                    
+                    <li class="nav-item">
+                      {% if user_id %}
+                          <a class="nav-link" href="{{ url_for('son_goruntulenen', kullanici_id=user_id) }}">Son Görüntülemelerim</a>
+                      {% else %}
+                          <a class="nav-link" href="/songoruntulenen">Son Görüntülemelerim</a>
+                      {% endif %}
+                  </li>
+                  <li class="nav-item">
+                      {% if user_id %}
+                          <a class="nav-link" href="{{ url_for('profilim', kullanici_id=user_id) }}">Profilim</a>
+                      {% else %}
+                          <a class="nav-link" href="/profilim">Profilim</a>
+                      {% endif %}
+                  </li>
+                  
                     </ul>
                 </div>
             </div>
@@ -120,7 +134,7 @@
         <br>
         <br>
         <br>
-        <form class="form" action="/search" method="get">
+        <form id="search-form" class="form" action="/search" method="get" onsubmit="return handleFormSubmit()">
           <div class="row">
             <div class="col-md-3">
               <div class="form-group">
@@ -164,12 +178,7 @@
 
         <br>
         <br>
-        <div id="button-container">
-            <div id="button" class="search-button btn btn-primary" onclick="animateButton()">Yapay Zeka ile özel arama yap! </div>
-        </div>
 
-        <br>
-        <br>
 
         <h3 class="h3">Otellerimiz</h3>
         <!-- Otellerin listelendiği bölüm -->
@@ -246,58 +255,70 @@
       }
   </script>
   <!-- ... -->
-<script>
-function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-      center: { lat: 41.0082, lng: 28.9784 }, // İstanbul koordinatları
-      zoom: 10
-  });
+  <script>
+    function handleFormSubmit() {
+        var destination = document.getElementById('nereye').value;
+        var checkinDate = document.getElementById('checkin').value;
+        var checkoutDate = document.getElementById('checkout').value;
+        var numPeople = document.getElementById('num_people').value;
 
-  var hotelLocations = [
-      { lat: 41.0082, lng: 28.9784 }, // Otel 1 koordinatları
-      { lat: 41.05, lng: 28.98 },    // Otel 2 koordinatları
-      { lat: 41.03, lng: 28.99 }     // Otel 3 koordinatları
-      // ... Diğer otellerin koordinatları buraya eklenebilir
-  ];
+        updateMapAndListings(destination, checkinDate, checkoutDate, numPeople);
 
-  var hotelData = [
-      { name: "Otel 1", dailyPrice: 15000, description: "Otel 1 açıklaması" },
-      { name: "Otel 2", dailyPrice: 20000, description: "Otel 2 açıklaması" },
-      { name: "Otel 3", dailyPrice: 12000, description: "Otel 3 açıklaması" }
-      // ... Diğer otellerin bilgileri buraya eklenebilir
-  ];
+        return false;
+    }
 
-  var infowindows = [];
+    function updateMapAndListings(destination, checkinDate, checkoutDate, numPeople) {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 41.0082, lng: 28.9784 }, // Istanbul coordinates
+            zoom: 10
+        });
 
-  for (var i = 0; i < hotelLocations.length; i++) {
-      var marker = new google.maps.Marker({
-          position: hotelLocations[i],
-          map: map,
-          title: 'Otel ' + (i + 1)
-      });
+        var hotelLocations = [
+            { lat: 41.0082, lng: 28.9784 },
+            { lat: 41.05, lng: 28.98 },
+            { lat: 41.03, lng: 28.99 }
+            // ... Diğer otellerin koordinatları buraya eklenebilir
+        ];
 
-      var infowindow = new google.maps.InfoWindow({
-          content: '<div><strong>' + hotelData[i].name + '</strong></div>' +
-              '<div>Günlük Fiyat: ' + hotelData[i].dailyPrice + ' TL</div>' +
-              '<button onclick="showHotelInfo(\'' + hotelData[i].name + '\', ' + hotelData[i].dailyPrice + ')">Detaylar</button>'
-      });
+        var hotelData = [
+            { name: "Otel 1", dailyPrice: 15000, description: "Otel 1 açıklaması" },
+            { name: "Otel 2", dailyPrice: 20000, description: "Otel 2 açıklaması" },
+            { name: "Otel 3", dailyPrice: 12000, description: "Otel 3 açıklaması" }
+            // ... Diğer otellerin bilgileri buraya eklenebilir
+        ];
 
-      infowindows.push(infowindow);
+        var infowindows = [];
 
-      marker.addListener('click', function () {
-          infowindows.forEach(function (info) {
-              info.close();
-          });
-          var info = infowindows[parseInt(this.getTitle().split(' ')[1]) - 1];
-          info.open(map, this);
-      });
-  }
-}
+        for (var i = 0; i < hotelLocations.length; i++) {
+            var marker = new google.maps.Marker({
+                position: hotelLocations[i],
+                map: map,
+                title: 'Otel ' + (i + 1)
+            });
 
-function showHotelInfo(name, price) {
-  alert('Otel Adı: ' + name + '\nGünlük Fiyat: ' + price + ' TL');
-}
+            var infowindow = new google.maps.InfoWindow({
+                content: '<div><strong>' + hotelData[i].name + '</strong></div>' +
+                    '<div>Günlük Fiyat: ' + hotelData[i].dailyPrice + ' TL</div>' +
+                    '<button onclick="showHotelInfo(\'' + hotelData[i].name + '\', ' + hotelData[i].dailyPrice + ')">Detaylar</button>'
+            });
+
+            infowindows.push(infowindow);
+
+            marker.addListener('click', function () {
+                infowindows.forEach(function (info) {
+                    info.close();
+                });
+                var info = infowindows[parseInt(this.getTitle().split(' ')[1]) - 1];
+                info.open(map, this);
+            });
+        }
+    }
+
+    function showHotelInfo(name, price) {
+        alert('Otel Adı: ' + name + '\nGünlük Fiyat: ' + price + ' TL');
+    }
 </script>
+
   
 </body>
 </html>

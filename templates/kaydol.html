@@ -99,6 +99,33 @@
         #button.animate {
             transform: rotateY(180deg);
         }
+        label {
+          display: block;
+          margin-bottom: 5px;
+        }
+      
+        input {
+          width: 100%;
+          padding: 8px;
+          box-sizing: border-box;
+          margin-bottom: 10px;
+        }
+      
+        button {
+          background-color: #007bff;
+          color: #fff;
+          padding: 10px;
+          cursor: pointer;
+        }
+      
+        button:hover {
+          background-color: #0056b3;
+        }
+      
+        /* Style for the checkbox */
+        input[type="checkbox"] {
+          margin-right: 5px;
+        }
     </style>
 </head>
 <body style ="background-color: #1e90ff;" >
@@ -121,9 +148,7 @@
                       <li class="nav-item">
                           <a class="nav-link" href="/girisyap">Giriş Yap</a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/asdasda">Favoriler</a>                      </li>
-                  </ul>
+                        </ul>
               </div>
           </div>
       </nav>
@@ -176,6 +201,16 @@
                     <input type="text" id="tc_kimlik" name="tc_kimlik" class="form-control" placeholder="Örnek: 12345678900" required>
                 </div>
             </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" name="kvkk_agreement" required>
+                  Kişisel verileriniz, Aydınlatma Metni kapsamında işlenmektedir. Onaylama butonuna bastıdığınızda Üyelik Sözleşmesi’ni ve Gizlilik Politikası’nı okuduğunuzu ve kabul ettiğinizi onaylamış oluyorsunuz.
+                </label>
+              </div>
+            </div>
+          
             
               <div class="col-md-12">
                 <div class="form-group">
