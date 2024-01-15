@@ -22,7 +22,6 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/admin/otelekle" style="color: #fff;">Otel Ekle</a></li>
                     <li><a href="/admin/faaliyet" style="color: #fff;">Faaliyet Kontrol</a></li>
-                    <li><a href="/admin/indirim" style="color: #fff;">İndirim Talebi</a></li>
                     <li><a href="/admin/uyeler" style="color: #fff;">Üye İşlemleri</a></li>
                     <li><a href="/admin/arama" style="color: #fff;">Arama Ayarları</a></li>
                     <li><a href="/admin/sikayetler" style="color: #fff;">Şikayetler</a></li>
@@ -101,9 +100,23 @@
             // Burada düzenleme işlemlerini gerçekleştirebilirsiniz
         }
 
-        function deleteMember(id) {
-            console.log('Delete member with ID ' + id);
-            // Burada silme işlemlerini gerçekleştirebilirsiniz
+        function deleteHotel(id) {
+            // Confirm before deletion
+            if (confirm('Are you sure you want to delete this hotel?')) {
+                // Perform AJAX request for deletion
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/otel/delete/' + id,
+                    success: function (response) {
+                        // Redirect to the hotel list page after successful deletion
+                        window.location.href = "/admin/oteller";
+                    },
+                    error: function (error) {
+                        // Handle error
+                        console.error('Error deleting hotel:', error);
+                    }
+                });
+            }
         }
     </script>
 </body>

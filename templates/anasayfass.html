@@ -110,6 +110,9 @@
                       <li class="nav-item">
                           <a class="nav-link" href="/girisyap">Giriş Yap</a>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/sikayet">Şikayet</a>
+                    </li>
                      
                   </ul>
               </div>
@@ -222,7 +225,7 @@
   
       function updateMapAndListings(destination, checkinDate, checkoutDate, numPeople) {
           var map = new google.maps.Map(document.getElementById('map'), {
-              center: { lat: 41.0082, lng: 28.9784 }, // Istanbul coordinates
+              center: { lat: 41.0082, lng: 28.9784 }, 
               zoom: 10
           });
   
@@ -230,14 +233,12 @@
               { lat: 41.0082, lng: 28.9784 },
               { lat: 41.05, lng: 28.98 },
               { lat: 41.03, lng: 28.99 }
-              // ... Diğer otellerin koordinatları buraya eklenebilir
           ];
   
           var hotelData = [
               { name: "Otel 1", dailyPrice: 15000, description: "Otel 1 açıklaması" },
               { name: "Otel 2", dailyPrice: 20000, description: "Otel 2 açıklaması" },
               { name: "Otel 3", dailyPrice: 12000, description: "Otel 3 açıklaması" }
-              // ... Diğer otellerin bilgileri buraya eklenebilir
           ];
   
           var infowindows = [];

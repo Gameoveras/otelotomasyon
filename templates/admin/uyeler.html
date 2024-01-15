@@ -22,7 +22,6 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/admin/otelekle" style="color: #fff;">Otel Ekle</a></li>
                     <li><a href="/admin/faaliyet" style="color: #fff;">Faaliyet Kontrol</a></li>
-                    <li><a href="/admin/indirim" style="color: #fff;">İndirim Talebi</a></li>
                     <li><a href="/admin/uyeler" style="color: #fff;">Üye İşlemleri</a></li>
                     <li><a href="/admin/arama" style="color: #fff;">Arama Ayarları</a></li>
                     <li><a href="/admin/sikayetler" style="color: #fff;">Şikayetler</a></li>
@@ -55,9 +54,9 @@
                             <td>{{ user[2] }}</td>
                             <td>{{ user[4] }}</td>
                             <td>
-                                <button class="btn btn-success" onclick="editMember({{ user[0] }})">Düzenle</button>
-                                <button class="btn btn-danger" onclick="deleteMember({{ user[0] }})">Sil</button>
-                            </td>
+                                <a href="{{ url_for('edit_member', user_id=user[0]) }}" class="btn btn-success">Düzenle</a>
+                                <a href="{{ url_for('delete_member', user_id=user[0]) }}" class="btn btn-danger" onclick="return confirm('Bu üyeyi silmek istediğinizden emin misiniz?')">Sil</a>
+                             </td>
                         </tr>
                     {% endfor %}
                 </tbody>

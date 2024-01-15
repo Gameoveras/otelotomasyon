@@ -216,8 +216,6 @@
             var checkInDate = document.getElementById('checkInDate').value;
             var checkOutDate = document.getElementById('checkOutDate').value;
 
-            // Filtreleme işlemleri yapılabilir, örneğin AJAX çağrısı ile sunucudan güncel rezervasyonları alabilirsiniz.
-            // Burada sadece örnek otelleri filtreleyeceğiz.
             var filteredHotels = hotels.filter(function (hotel) {
                 return hotel.checkIn >= checkInDate && hotel.checkOut <= checkOutDate;
             });

@@ -22,7 +22,6 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/admin/otelekle" style="color: #fff;">Otel Ekle</a></li>
                     <li><a href="/admin/faaliyet" style="color: #fff;">Faaliyet Kontrol</a></li>
-                    <li><a href="/admin/indirim" style="color: #fff;">İndirim Talebi</a></li>
                     <li><a href="/admin/uyeler" style="color: #fff;">Üye İşlemleri</a></li>
                     <li><a href="/admin/arama" style="color: #fff;">Arama Ayarları</a></li>
                     <li><a href="/admin/sikayetler" style="color: #fff;">Şikayetler</a></li>
@@ -46,11 +45,11 @@
                         <th>Otel Adı</th>
                         <th>Konu</th>
                         <th>Mesaj</th>
-                        <th>Durum</th> <!-- Durum sütunu eklendi -->
+                        <th>Durum</th> 
                     </tr>
                 </thead>
                 <tbody>
-                    {% for sikayet in sikayet %}
+                    {% for sikayet in sikayetler %}
                         <tr>
                             <td>{{ sikayet[0] }}</td>
                             <td>{{ sikayet[1] }}</td>
@@ -59,8 +58,14 @@
                             <td>{{ sikayet[4] }}</td>
                             <td>{{ sikayet[5] }}</td> 
                             <td>
-                                <button class="btn btn-success" onclick="ilgilenildi({{ sikayet[0] }})">İlgilenildi</button>
-                                <button class="btn btn-danger" onclick="ilgilenilmedi({{ sikayet[0] }})">İlgilenilmedi</button>
+                                {% if sikayet[5] == 'İlgilenildi' %}
+                                    <span class="badge badge-success">İlgilenildi</span>
+                                {% elif sikayet[5] == 'İlgilenilmedi' %}
+                                    <span class="badge badge-danger">İlgilenilmedi</span>
+                                {% else %}
+                                    <button class="btn btn-success" onclick="ilgilenildi({{ sikayet[0] }})">İlgilenildi</button>
+                                    <button class="btn btn-danger" onclick="ilgilenilmedi({{ sikayet[0] }})">İlgilenilmedi</button>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -69,8 +74,36 @@
         </div>
         <br>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        function ilgilenildi(sikayet_id) {
+            $.ajax({
+                type: 'POST',
+                url: '/admin/sikayet_ilgilenildi/' + sikayet_id,
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error marking complaint as handled:', error);
+                }
+            });
+        }
+
+        function ilgilenilmedi(sikayet_id) {
+            $.ajax({
+                type: 'POST',
+                url: '/admin/sikayet_ilgilenilmedi/' + sikayet_id,
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error marking complaint as not handled:', error);
+                }
+            });
+        }
+    </script>
     <br>
     <br>
     <div class="footer">

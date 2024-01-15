@@ -271,8 +271,10 @@ def faaliyet():
 # Yönetici kullanıcılar
 @app.route("/admin/uyeler", methods=['GET'])
 def uyeler():
-    users = get_users()  # get_users fonksiyonunu implemente ettiğinizi varsayalım
+    users = get_users() 
     return render_template('/admin/uyeler.html', users=users)
+
+
 
 
 # Yönetici oteller
@@ -285,8 +287,33 @@ def hotels():
 # Yönetici şikayetler
 @app.route("/admin/sikayetler", methods=['GET'])
 def sikayet():
-    sikayet = get_sikayet() 
-    return render_template('/admin/sikayetler.html', sikayet=sikayet)
+    sikayetler = get_sikayet() 
+    return render_template('/admin/sikayetler.html', sikayetler=sikayetler)
+
+# İlgilenildi fonksiyonu
+@app.route("/admin/sikayet_ilgilenildi/<int:sikayet_id>", methods=['POST'])
+def sikayet_ilgilenildi(sikayet_id):
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("UPDATE sikayet SET durum = 'İlgilenildi' WHERE id=?", (sikayet_id,))
+    conn.commit()
+    conn.close()
+
+    return "Success" 
+
+# İlgiilenilmedi fonksiyonu
+@app.route("/admin/sikayet_ilgilenilmedi/<int:sikayet_id>", methods=['POST'])
+def sikayet_ilgilenilmedi(sikayet_id):
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("UPDATE sikayet SET durum = 'İlgilenilmedi' WHERE id=?", (sikayet_id,))
+    conn.commit()
+    conn.close()
+
+    return "Success"  
+
 
 
 
@@ -294,6 +321,34 @@ def sikayet():
 @app.route("/admin/arama", methods=['GET'])
 def arama():
     return render_template('/admin/arama.html')
+
+
+@app.route('/admin/delete_member/<int:user_id>')
+def delete_member(user_id):
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    # Perform delete operation
+    cursor.execute("DELETE FROM kullanici WHERE id = ?", (user_id,))
+    conn.commit()
+
+    conn.close()
+
+    return redirect('/admin/uyeler')
+
+@app.route('/admin/edit_member/<int:user_id>')
+def edit_member(user_id):
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM kullanici WHERE id = ?", (user_id,))
+    user = cursor.fetchone()
+
+    conn.close()
+
+    return render_template('edit_member.html', user=user)
+
+
 
 # Yönetici ilanları
 @app.route("/admin/ilanlar", methods=['GET'])
@@ -750,7 +805,7 @@ def sil_yorum(yorum_id):
     conn.close()
 
 # Otele ait yorumları görüntüleme işlevi
-@app.route("/otel/yorumlar", methods=['GET'])
+@app.route("/otel/yorumlar", methods=['GET', 'POST'])
 def otel_yorumlar():
     if 'otel' not in session:
         return redirect(url_for('otel_giris'))
@@ -763,18 +818,20 @@ def otel_yorumlar():
     # Otele ait yorumları al
     cursor.execute('SELECT * FROM OtelYorumlari WHERE otel_id = ?', (otel_id,))
     yorumlar = cursor.fetchall()
-    
+
     if request.method == 'POST':
         # Yorumu silme işlemi
         yorum_id = request.form.get('yorum_id')
         if yorum_id:
-            sil_yorum(yorum_id)  # yorumları veritabanından silen bir fonksiyon
-
+            sil_yorum(yorum_id, cursor, conn)  # Pass cursor and connection to the function
 
     conn.close()
 
     return render_template('/otel/yorumlar.html', yorumlar=yorumlar)
 
+def sil_yorum(yorum_id, cursor, conn):
+    cursor.execute('DELETE FROM OtelYorumlari WHERE id = ?', (yorum_id,))
+    conn.commit()
 
 # Talep onaylama işlevi
 @app.route("/otel/talepler", methods=['GET'])
@@ -832,15 +889,24 @@ def yorum_ekle(otel_id):
         ad = request.form['yorum-yapan']
         puan = request.form['yorum-puan']
         icerik = request.form['yorum-icerik']
-        
-        conn = create_connection()
-        cursor = conn.cursor()
 
-        cursor.execute('INSERT INTO OtelYorumlari (otel_id, yorum_yapan, yorum_puan, yorum_icerik) VALUES (?, ?, ?, ?)',
-                       (otel_id, ad, puan, icerik))
+        try:
+            conn = create_connection()
+            cursor = conn.cursor()
 
+            cursor.execute('INSERT INTO OtelYorumlari (otel_id, yorum_yapan, yorum_puan, yorum_icerik) VALUES (?, ?, ?, ?)',
+                           (otel_id, ad, puan, icerik))
 
-        return redirect(url_for('adres', otel_id=otel_id)) 
+            conn.commit()
+            print("Yorum eklendi.")
+        except Exception as e:
+            print(f"Error: {str(e)}")
+            conn.rollback()
+        finally:
+            if conn:
+                conn.close()
+
+        return redirect(url_for('adres', otel_id=otel_id))
 
 # Favoriye ekleme işlevi
 @app.route("/favori-ekle/<int:otel_id>", methods=['POST'])
@@ -892,6 +958,21 @@ def songorulenen_ekle(otel_id):
         return redirect(url_for('login'))
 
 
+#Otel silme işlevi
+@app.route("/admin/otel/delete/<int:hotel_id>", methods=['POST'])
+def delete_hotel(hotel_id):
+    conn = create_connection()
+    cursor = conn.cursor()
+    if request.method == 'POST':
+        cursor.execute("DELETE FROM hotel WHERE hotel_id=?", (hotel_id,))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('hotels'))
+    else:
+        return redirect(url_for('hotels'))
+    
+    
+ 
 
 
 
